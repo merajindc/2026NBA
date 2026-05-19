@@ -89,13 +89,11 @@
   .team-row.won { background: var(--green-dim); }
   .team-row.lost { color: var(--text3); }
   .team-row.tbd { color: var(--text3); font-style: italic; }
-  .team-row.live { color: var(--text); }
   .team-name { flex: 1; font-weight: 500; }
   .team-row.won .team-name { font-weight: 700; color: var(--green); }
   .series-score { font-size: 11px; font-weight: 600; color: var(--text2); }
   .series-score.sweep { color: var(--orange); }
   .series-score.g7 { color: var(--yellow); }
-  .series-score.tied { color: var(--yellow); }
 
   .finals-banner { background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%); border: 1px solid var(--border2); border-radius: var(--radius); padding: 1.25rem 1.5rem; text-align: center; margin-top: 1.5rem; }
   .finals-banner .label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--text3); margin-bottom: .4rem; }
@@ -136,14 +134,15 @@
   /* Legend */
   .legend { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 12px; color: var(--text2); margin-bottom: 1rem; }
 
-  /* R2 live */
-  .live-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
-  .live-box-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--orange); margin-bottom: .75rem; }
-  .live-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem 2rem; }
-  @media(max-width:480px){ .live-grid { grid-template-columns: 1fr; } }
-  .live-conf { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text3); margin-bottom: .4rem; }
-  .live-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
-  .live-status { font-size: 11px; color: var(--yellow); font-weight: 600; }
+  /* R2 upcoming */
+  .upcoming { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .upcoming-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--orange); margin-bottom: .75rem; }
+  .upcoming-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem 2rem; }
+  @media(max-width:480px){ .upcoming-grid { grid-template-columns: 1fr; } }
+  .upcoming-conf { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text3); margin-bottom: .4rem; }
+  .upcoming-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
+  .upcoming-seed { color: var(--text3); font-size: 11px; margin-right: 4px; }
+  .upcoming-date { font-size: 11px; color: var(--text3); }
 
   /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -154,6 +153,8 @@
     .lb-row { grid-template-columns: 30px 1fr 44px repeat(3,36px) 46px; }
     .lb-row .lb-cell:nth-child(6),
     .lb-row .lb-cell:nth-child(7) { display: none; }
+    .lb-head span:nth-child(6),
+    .lb-head span:nth-child(7) { display: none; }
   }
   @media(max-width:480px){
     .title { font-size: 20px; }
@@ -167,16 +168,16 @@
   <div class="header">
     <div class="header-top">
       <h1 class="title">2026 NBA Playoffs <span>Pool</span></h1>
-      <span class="badge badge-live">R2 In Progress</span>
+      <span class="badge badge-done">R2 Complete</span>
     </div>
-    <p class="subtitle">Vegas bracket pool &nbsp;·&nbsp; 10 participants &nbsp;·&nbsp; 141 pts available &nbsp;·&nbsp; Last updated May 12</p>
+    <p class="subtitle">Vegas bracket pool &nbsp;·&nbsp; 10 participants &nbsp;·&nbsp; 141 pts available &nbsp;·&nbsp; Conf. Finals starting May 19</p>
   </div>
 
   <div class="stat-strip">
-    <div class="stat"><div class="stat-label">Round</div><div class="stat-val" style="color:var(--orange)">Semis</div><div class="stat-sub">2 done, 2 live</div></div>
-    <div class="stat"><div class="stat-label">R2 Sweeps</div><div class="stat-val">2</div><div class="stat-sub">OKC &amp; Knicks</div></div>
-    <div class="stat"><div class="stat-label">Live Series</div><div class="stat-val">2</div><div class="stat-sub">Both tied 2-2</div></div>
-    <div class="stat"><div class="stat-label">Pts left</div><div class="stat-val">69</div><div class="stat-sub">R2 partial + CF + Fin</div></div>
+    <div class="stat"><div class="stat-label">Round</div><div class="stat-val" style="color:var(--orange)">Conf. Finals</div><div class="stat-sub">Starting May 19</div></div>
+    <div class="stat"><div class="stat-label">R2 upsets</div><div class="stat-val">1</div><div class="stat-sub">Cavs over Pistons</div></div>
+    <div class="stat"><div class="stat-label">R2 Sweeps</div><div class="stat-val">2</div><div class="stat-sub">Thunder &amp; Knicks</div></div>
+    <div class="stat"><div class="stat-label">Pts left</div><div class="stat-val">53</div><div class="stat-sub">CF (28) + Finals (20) + MVP (5)</div></div>
   </div>
 
   <div class="tabs">
@@ -202,23 +203,21 @@
       </div>
       <div id="lb-rows"></div>
     </div>
-    <p style="font-size:11px;color:var(--text3);margin-top:.6rem">· = pending series. Up to 69 pts still available (remaining R2 + CF + Finals + MVP).</p>
+    <p style="font-size:11px;color:var(--text3);margin-top:.6rem">53 pts still available across CF (28) + Finals (20) + MVP (5)</p>
   </div>
 
   <!-- BRACKET -->
   <div id="bracket" class="section">
-    <div class="live-box">
-      <div class="live-box-label">⚡ Live — Conference Semifinals</div>
-      <div class="live-grid">
+    <div class="upcoming">
+      <div class="upcoming-label">Conference Finals — starting May 19</div>
+      <div class="upcoming-grid">
         <div>
-          <div class="live-conf">West</div>
-          <div class="live-row"><span>Thunder vs Wolves</span><span class="live-status" style="color:var(--green)">OKC wins 4–0 ✓</span></div>
-          <div class="live-row"><span>Spurs vs Timberwolves</span><span class="live-status">Tied 2–2 · G5 today</span></div>
+          <div class="upcoming-conf">West — WCF</div>
+          <div class="upcoming-row"><span><span class="upcoming-seed">1v2</span>Thunder vs Spurs</span><span class="upcoming-date">May 19</span></div>
         </div>
         <div>
-          <div class="live-conf">East</div>
-          <div class="live-row"><span>Pistons vs Cavaliers</span><span class="live-status">Tied 2–2 · G5 May 13</span></div>
-          <div class="live-row"><span>Knicks vs 76ers</span><span class="live-status" style="color:var(--green)">NY wins 4–0 ✓</span></div>
+          <div class="upcoming-conf">East — ECF</div>
+          <div class="upcoming-row"><span><span class="upcoming-seed">4v3</span>Cavaliers vs Knicks</span><span class="upcoming-date">May 19</span></div>
         </div>
       </div>
     </div>
@@ -245,20 +244,20 @@
           <div class="team-row lost"><span class="team-name">Rockets</span></div>
         </div>
 
-        <div class="round-head">Semifinals <span class="badge badge-live">In Progress</span></div>
+        <div class="round-head">Semifinals <span class="badge badge-done">Complete</span></div>
         <div class="matchup">
-          <div class="team-row won"><span class="team-name">Thunder</span><span class="series-score sweep">4–0 sweep ✓</span></div>
+          <div class="team-row won"><span class="team-name">Thunder</span><span class="series-score sweep">4–0 sweep</span></div>
           <div class="team-row lost"><span class="team-name">Lakers</span></div>
         </div>
         <div class="matchup">
-          <div class="team-row live"><span class="team-name">Spurs</span><span class="series-score tied">2–2</span></div>
-          <div class="team-row live"><span class="team-name">Timberwolves</span><span class="series-score tied">G5 May 12</span></div>
+          <div class="team-row won"><span class="team-name">Spurs</span><span class="series-score">4–2</span></div>
+          <div class="team-row lost"><span class="team-name">Timberwolves</span></div>
         </div>
 
-        <div class="round-head">WCF <span class="badge badge-tbd">TBD</span></div>
+        <div class="round-head">WCF <span class="badge badge-live">Starting May 19</span></div>
         <div class="matchup">
-          <div class="team-row won"><span class="team-name">Thunder</span></div>
-          <div class="team-row tbd"><span class="team-name">Spurs / Wolves TBD</span></div>
+          <div class="team-row tbd"><span class="team-name">Thunder</span></div>
+          <div class="team-row tbd"><span class="team-name">Spurs</span></div>
         </div>
       </div>
 
@@ -283,20 +282,20 @@
           <div class="team-row lost"><span class="team-name">Raptors</span></div>
         </div>
 
-        <div class="round-head">Semifinals <span class="badge badge-live">In Progress</span></div>
+        <div class="round-head">Semifinals <span class="badge badge-done">Complete</span></div>
         <div class="matchup">
-          <div class="team-row live"><span class="team-name">Pistons</span><span class="series-score tied">2–2</span></div>
-          <div class="team-row live"><span class="team-name">Cavaliers</span><span class="series-score tied">G5 May 13</span></div>
+          <div class="team-row won"><span class="team-name">Cavaliers</span><span class="series-score g7">4–3 G7</span></div>
+          <div class="team-row lost"><span class="team-name">Pistons</span></div>
         </div>
         <div class="matchup">
-          <div class="team-row won"><span class="team-name">Knicks</span><span class="series-score sweep">4–0 sweep ✓</span></div>
+          <div class="team-row won"><span class="team-name">Knicks</span><span class="series-score sweep">4–0 sweep</span></div>
           <div class="team-row lost"><span class="team-name">76ers</span></div>
         </div>
 
-        <div class="round-head">ECF <span class="badge badge-tbd">TBD</span></div>
+        <div class="round-head">ECF <span class="badge badge-live">Starting May 19</span></div>
         <div class="matchup">
-          <div class="team-row won"><span class="team-name">Knicks</span></div>
-          <div class="team-row tbd"><span class="team-name">Pistons / Cavs TBD</span></div>
+          <div class="team-row tbd"><span class="team-name">Cavaliers</span></div>
+          <div class="team-row tbd"><span class="team-name">Knicks</span></div>
         </div>
       </div>
     </div>
@@ -366,46 +365,40 @@
 <script>
 const SC = { r1:{f:7,w:5}, r2:{f:8,w:5}, cf:{f:14,w:10}, fin:{f:20,w:15}, mvp:5 };
 
-// R2 pick order: [WC1=Thunder/Lakers, WC2=Spurs/Wolves, EC1=Pistons/Cavs, EC2=Knicks/76ers]
 const ACT = {
   r1: [
-    {w:'Thunder', g:4},  // Thunder/Suns
-    {w:'Lakers',  g:6},  // Lakers/Rockets
-    {w:'Wolves',  g:6},  // Nuggets/Wolves — upset
-    {w:'Spurs',   g:5},  // Spurs/Blazers
-    {w:'Pistons', g:7},  // Pistons/Magic
-    {w:'Cavs',    g:7},  // Cavs/Raptors
-    {w:'Knicks',  g:6},  // Knicks/Hawks
-    {w:'76ers',   g:7},  // Celtics/Sixers — upset
+    {w:'Thunder', g:4},
+    {w:'Lakers',  g:6},
+    {w:'Wolves',  g:6},
+    {w:'Spurs',   g:5},
+    {w:'Pistons', g:7},
+    {w:'Cavs',    g:7},
+    {w:'Knicks',  g:6},
+    {w:'76ers',   g:7},
   ],
-  // R2: Thunder swept Lakers 4-0; Spurs/Wolves tied 2-2 (pending); Pistons/Cavs tied 2-2 (pending); Knicks swept 76ers 4-0
-  r2:  [{w:'Thunder',g:4},{w:null,g:null},{w:null,g:null},{w:'Knicks',g:4}],
+  r2:  [{w:'Thunder',g:4},{w:'Spurs',g:6},{w:'Cavs',g:7},{w:'Knicks',g:4}],
   cf:  [{w:null,g:null},{w:null,g:null}],
   fin: {w:null, g:null},
   mvp: null
 };
 
-// R2 matchup labels
-const R2L = ['Thunder/Lakers (WC1)','Spurs/Wolves (WC2)','Pistons/Cavs (EC1)','Knicks/76ers (EC2)'];
-
 const AL = {
   okc:'thunder', oklahomacity:'thunder', oklahomacitythunder:'thunder',
-  timberwolves:'wolves', minnesota:'wolves', minnesotawolves:'wolves', minnesotatimberwolves:'wolves',
-  sixers:'76ers', philadelphia:'76ers', philly:'76ers', philadelphiasixers:'76ers',
-  cavaliers:'cavs', cleveland:'cavs', clevelandcavaliers:'cavs',
-  knicks:'knicks', newyork:'knicks', newyorkknicks:'knicks',
-  pistons:'pistons', detroit:'pistons', detroitpistons:'pistons',
-  spurs:'spurs', sanantonio:'spurs', sanantoniospurs:'spurs',
-  lakers:'lakers', losangeles:'lakers', losangeleslakers:'lakers',
-  rockets:'rockets', houston:'rockets', houstonrockets:'rockets',
-  nuggets:'nuggets', denver:'nuggets', denvernuggets:'nuggets',
-  trailblazers:'blazers', blazers:'blazers', portland:'blazers', portlandtrailblazers:'blazers',
-  magic:'magic', orlando:'magic', orlandomagic:'magic',
-  hawks:'hawks', atlanta:'hawks', atlantahawks:'hawks',
-  raptors:'raptors', toronto:'raptors', torontoraptors:'raptors',
-  suns:'suns', phoenix:'suns', phoenixsuns:'suns',
-  celtics:'celtics', boston:'celtics', bostonceltics:'celtics',
-  thunder:'thunder'
+  timberwolves:'wolves', minnesota:'wolves', minnesotawolves:'wolves',
+  sixers:'76ers', philadelphia:'76ers', philly:'76ers',
+  cavaliers:'cavs', cleveland:'cavs',
+  knicks:'newyork', newyorkknicks:'knicks',
+  pistons:'detroit', detroitpistons:'pistons',
+  spurs:'sanantonio', sanantoniospurs:'spurs',
+  lakers:'losangeles', losangeleslakers:'lakers',
+  rockets:'houston', houstonrockets:'rockets',
+  nuggets:'denver', denvernuggets:'nuggets',
+  trailblazers:'blazers', portland:'blazers', portlandtrailblazers:'blazers',
+  magic:'orlando', orlandomagic:'magic',
+  hawks:'atlanta', atlantahawks:'hawks',
+  raptors:'toronto', torontoraptors:'raptors',
+  suns:'phoenix', phoenixsuns:'suns',
+  celtics:'boston', bostonceltics:'celtics'
 };
 function norm(s){ return s ? s.trim().toLowerCase().replace(/[\s\.\-]/g,'') : ''; }
 function can(s){ const n=norm(s); return AL[n]||n; }
@@ -424,9 +417,6 @@ function iconFor(pt,pg,aw,ag,pts){
 
 const R1L = ['Thunder/Suns','Lakers/Rockets','Nuggets/Wolves','Spurs/Blazers','Pistons/Magic','Cavs/Raptors','Knicks/Hawks','Celtics/Sixers'];
 
-// R2 picks order per project brief: [WC1=Thunder/Wolves matchup → actually Thunder/Lakers, WC2=Spurs/Wolves, EC1=Pistons/Cavs, EC2=Knicks/76ers]
-// NOTE: Original picks sheet listed "WC1" as Thunder/Wolves — but the actual bracket has Thunder vs Lakers as WC1 and Spurs vs Wolves as WC2.
-// Picks are stored in the order: Thunder series, Spurs series, Pistons series, Knicks series.
 const POOL = [
   {name:'Yaseen',
    r1:[{p:'Thunder',g:5},{p:'Rockets',g:6},{p:'Nuggets',g:5},{p:'Spurs',g:4},{p:'Pistons',g:4},{p:'Cavs',g:5},{p:'Knicks',g:6},{p:'Celtics',g:6}],
@@ -484,19 +474,18 @@ function calcPts(p){
 function renderLB(){
   const data = POOL.map(p => ({...p, pts: calcPts(p)})).sort((a,b) => b.pts.total - a.pts.total);
   const medals = ['🥇','🥈','🥉'];
+  const maxRemaining = 2*SC.cf.f + SC.fin.f + SC.mvp; // 53
 
   const html = data.map((p,i) => {
     const rank = i+1;
     const disp = rank<=3 ? medals[rank-1] : rank;
-    const ptsCls = p.pts.total > 0 ? 'pts-pos' : 'pts-zero';
-    const r2d = p.pts.r2 > 0 ? p.pts.r2 : '—';
-    const cfd = p.pts.cf > 0 ? p.pts.cf : '—';
-    const find = p.pts.fin > 0 ? p.pts.fin : '—';
-    const mvpd = p.pts.mvp > 0 ? p.pts.mvp : '—';
+    const ptsCls = p.pts.r1>0 ? 'pts-pos' : 'pts-zero';
+    const maxTotal = p.pts.total + maxRemaining;
+    const r2d = p.pts.r2 || '—', cfd = p.pts.cf || '—', find = p.pts.fin || '—', mvpd = p.pts.mvp || '—';
     return `<div class="lb-row">
       <span class="lb-rank">${disp}</span>
       <span class="lb-name">${p.name}</span>
-      <span class="lb-r1 ${p.pts.r1>0?'pts-pos':'pts-zero'}">${p.pts.r1}</span>
+      <span class="lb-r1 ${ptsCls}">${p.pts.r1}</span>
       <span class="lb-cell">${r2d}</span>
       <span class="lb-cell">${cfd}</span>
       <span class="lb-cell">${find}</span>
@@ -511,7 +500,7 @@ function renderLB(){
 function renderPicks(){
   const data = POOL.map(p => ({...p, pts: calcPts(p)})).sort((a,b) => b.pts.total - a.pts.total);
   const html = data.map(p => {
-    const ptsCls = p.pts.total > 0 ? 'pts-pos' : 'pts-zero';
+    const ptsCls = p.pts.r1>0 ? 'pts-pos' : 'pts-zero';
 
     const r1html = p.r1.map((pk,i) => {
       const ic = iconFor(pk.p,pk.g, ACT.r1[i].w,ACT.r1[i].g, SC.r1);
@@ -527,14 +516,7 @@ function renderPicks(){
 
     const r2html = p.r2.map((pk,i) => {
       const ic = iconFor(pk.p,pk.g, ACT.r2[i].w,ACT.r2[i].g, SC.r2);
-      const actualNote = (ic.c==='ic-no' && ACT.r2[i].w) ? `<span class="actual-note">(${ACT.r2[i].w} in ${ACT.r2[i].g})</span>` : '';
-      const lblHtml = ic.lbl ? `<span class="pts-label ${ic.c==='ic-ok'?'ok':ic.c==='ic-part'?'part':''}">${ic.lbl}</span>` : '';
-      return `<div class="pick-item">
-        <span class="${ic.c}">${ic.s}</span>
-        <span style="color:var(--text3);font-size:11px">${R2L[i]}:</span>
-        ${pk.p} in ${pk.g||'?'}
-        ${lblHtml} ${actualNote}
-      </div>`;
+      return `<div class="pick-item"><span class="${ic.c}">${ic.s}</span> ${pk.p} in ${pk.g||'?'} ${ic.lbl?`<span class="pts-label ${ic.c==='ic-ok'?'ok':''}">${ic.lbl}</span>`:''}</div>`;
     }).join('');
 
     const cfhtml = p.cf.map((pk,i) => {
